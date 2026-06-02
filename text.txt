@@ -1,0 +1,1134 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Business Activities - نظام إدارة الملفات الأكاديمية المستدام</title>
+    <style>
+        :root {
+            --primary-blue: #2563eb;    
+            --light-blue: #eff6ff;
+            --bg-gradient: #f3f7fa;     
+            --card-bg: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --success-color: #10b981; 
+            --danger-color: #ef4444;  
+            --warning-color: #f59e0b;
+            --radius-main: 24px;        
+            --radius-input: 30px;       
+            --shadow-soft: 0 10px 30px rgba(37, 99, 235, 0.06), 0 4px 12px rgba(0, 0, 0, 0.03); 
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-gradient);
+            color: var(--text-main);
+            padding: 20px;
+            padding-bottom: 90px; 
+            min-height: 100vh;
+        }
+
+        .app-header {
+            text-align: center;
+            margin-bottom: 30px;
+            margin-top: 10px;
+        }
+
+        .app-brand {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--primary-blue);
+            letter-spacing: 0.5px;
+            margin-bottom: 5px;
+        }
+
+        .app-subtitle {
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        .demo-nav {
+            background: var(--card-bg);
+            padding: 8px;
+            margin-bottom: 30px;
+            border-radius: var(--radius-input);
+            display: flex;
+            justify-content: space-around;
+            gap: 10px;
+            box-shadow: var(--shadow-soft);
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .demo-nav button {
+            background: transparent;
+            color: var(--text-muted);
+            border: none;
+            padding: 12px 24px;
+            border-radius: var(--radius-input);
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 15px;
+            transition: all 0.3s ease;
+            flex: 1;
+        }
+
+        .demo-nav button:hover {
+            background: var(--light-blue);
+            color: var(--primary-blue);
+        }
+
+        .demo-nav button.active-nav-btn {
+            background: var(--primary-blue);
+            color: white;
+            box-shadow: 0 4px 14px rgba(37, 99, 235, 0.3);
+        }
+
+        .page {
+            display: none;
+            background: var(--card-bg);
+            padding: 40px 35px;
+            border-radius: var(--radius-main);
+            box-shadow: var(--shadow-soft);
+            max-width: 800px;
+            margin: 0 auto;
+            border: 1px solid rgba(255, 255, 255, 0.8);
+        }
+
+        .active-page {
+            display: block;
+            animation: cardAppeared 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes cardAppeared {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h2 {
+            color: var(--text-main);
+            margin-bottom: 25px;
+            font-size: 22px;
+            font-weight: 700;
+            text-align: center;
+        }
+
+        h3 {
+            font-size: 18px;
+            margin-top: 35px;
+            margin-bottom: 20px;
+            color: var(--text-main);
+            position: relative;
+            padding-right: 15px;
+        }
+        
+        h3::before {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 4px;
+            width: 5px;
+            height: 16px;
+            background-color: var(--primary-blue);
+            border-radius: 10px;
+        }
+
+        .form-group { margin-bottom: 22px; }
+
+        .form-row {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .form-row .form-group {
+            flex: 1;
+            min-width: 220px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--text-main);
+            font-size: 14px;
+            padding-right: 5px;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 14px 20px;
+            border: 1px solid #e2e8f0;
+            border-radius: var(--radius-input);
+            font-size: 15px;
+            color: var(--text-main);
+            background-color: #fafafa;
+            transition: all 0.25s ease;
+        }
+
+        input[type="file"] {
+            padding: 10px 20px;
+            background: #fff;
+            cursor: pointer;
+        }
+
+        textarea { border-radius: 16px; resize: vertical; min-height: 90px; }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--primary-blue);
+            background-color: #fff;
+            box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
+        }
+
+        button.btn-block {
+            width: 100%;
+            padding: 15px;
+            background: var(--primary-blue);
+            color: white;
+            border: none;
+            border-radius: var(--radius-input);
+            font-size: 16px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.25s ease;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+            margin-top: 10px;
+        }
+
+        button.btn-block:hover { 
+            background: #1d4ed8; 
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px rgba(37, 99, 235, 0.3);
+        }
+
+        .tab-container {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+            justify-content: center;
+        }
+
+        .tab-btn {
+            background: #f1f5f9;
+            border: none;
+            padding: 10px 20px;
+            border-radius: var(--radius-input);
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+
+        .tab-btn.active-tab {
+            background: var(--light-blue);
+            color: var(--primary-blue);
+        }
+
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+            margin-top: 15px;
+            border-radius: 16px;
+            border: 1px solid #e2e8f0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+        }
+
+        th, td { padding: 16px; text-align: right; font-size: 14px; }
+
+        th { background-color: #f8fafc; color: var(--text-muted); font-weight: 700; border-bottom: 2px solid #edf2f7; }
+
+        td { border-bottom: 1px solid #edf2f7; background-color: #fff; }
+
+        .btn-action {
+            padding: 8px 14px;
+            border: none;
+            border-radius: var(--radius-input);
+            cursor: pointer;
+            color: white;
+            margin-left: 5px;
+            font-weight: 600;
+            font-size: 13px;
+        }
+
+        .btn-approve { background-color: var(--success-color); }
+        .btn-reject { background-color: var(--danger-color); }
+        .btn-edit { background-color: var(--warning-color); }
+        
+        .btn-download { 
+            background-color: var(--primary-blue); 
+            padding: 10px 20px; 
+            font-size: 14px; 
+            border-radius: var(--radius-input); 
+            display: inline-block; 
+            cursor: pointer; 
+            border: none; 
+            color: white;
+        }
+
+        .file-box {
+            border: 1px solid #e2e8f0;
+            padding: 25px;
+            border-radius: var(--radius-main);
+            margin-top: 20px;
+            background: #fafafa;
+        }
+
+        .live-preview-box {
+            width: 100%;
+            background: #ffffff;
+            border: 2px dashed #e2e8f0;
+            border-radius: 16px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .pdf-frame-mock {
+            width: 100%;
+            min-height: 250px;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            padding: 15px;
+        }
+
+        .preview-img {
+            max-width: 100%;
+            max-height: 350px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+
+        .current-assignment-badge {
+            background: var(--light-blue);
+            color: var(--primary-blue);
+            padding: 10px 16px;
+            border-radius: var(--radius-input);
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+        .logout-btn {
+            float: left;
+            background: #f1f5f9;
+            color: var(--danger-color);
+            border: none;
+            padding: 10px 18px;
+            border-radius: var(--radius-input);
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .custom-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 23, 42, 0.3);
+            backdrop-filter: blur(4px);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .modal-content {
+            background: #fff;
+            padding: 30px;
+            border-radius: var(--radius-main);
+            width: 100%;
+            max-width: 500px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1);
+        }
+        .close-modal-btn {
+            background: #f1f5f9;
+            color: var(--text-main);
+            border: none;
+            padding: 10px 20px;
+            border-radius: var(--radius-input);
+            cursor: pointer;
+            font-weight: 600;
+            float: left;
+            margin-top: 20px;
+        }
+
+        .clear { clear: both; }
+
+        .footer-signature {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(8px);
+            color: var(--text-main);
+            text-align: center;
+            padding: 15px;
+            font-size: 13px;
+            font-weight: 600;
+            z-index: 1000;
+            direction: ltr; 
+            border-top: 1px solid #e2e8f0;
+        }
+        .footer-signature span { color: var(--primary-blue); font-weight: 700; }
+    </style>
+</head>
+<body>
+
+    <div class="app-header">
+        <div class="app-brand">Business Activities</div>
+        <div class="app-subtitle">منصة التحقق وإدارة الملفات الأكاديمية (حفظ مستدام تلقائي)</div>
+    </div>
+
+    <div id="main-nav" class="demo-nav">
+        <button id="btn-student" class="active-nav-btn" onclick="switchPage('student-login-page', 'btn-student')">بوابة الطلاب</button>
+        <button id="btn-doctor" onclick="switchPage('doctor-login-page', 'btn-doctor')">بوابة هيئة التدريس</button>
+    </div>
+
+    <div id="student-login-page" class="page active-page">
+        <div class="tab-container">
+            <button id="tab-login" class="tab-btn active-tab" onclick="switchStudentTab('login')">تسجيل الدخول</button>
+            <button id="tab-register" class="tab-btn" onclick="switchStudentTab('register')">إنشاء حساب جديد</button>
+        </div>
+
+        <div id="student-login-form">
+            <h2>تسجيل دخول الطالب</h2>
+            <div class="form-group">
+                <label>اسم المستخدم:</label>
+                <input type="text" id="std-login-user" placeholder="أدخل اسم المستخدم">
+            </div>
+            <div class="form-group">
+                <label>كلمة المرور:</label>
+                <input type="password" id="std-login-pass" placeholder="أدخل كلمة المرور">
+            </div>
+            <button class="btn-block" onclick="handleStudentLogin()">دخول المنصة</button>
+        </div>
+
+        <div id="student-register-form" style="display: none;">
+            <h2>إنشاء حساب طالب جديد</h2>
+            <div class="form-group">
+                <label>الاسم الكامل:</label>
+                <input type="text" id="reg-name" placeholder="أدخل الاسم الثلاثي الفعلي">
+            </div>
+            <div class="form-group">
+                <label>اسم المستخدم المقترح:</label>
+                <input type="text" id="reg-user" placeholder="أدخل اسم مستخدم بالإنجليزية">
+            </div>
+            <div class="form-group">
+                <label>كلمة المرور:</label>
+                <input type="password" id="reg-pass" placeholder="أدخل كلمة مرور قوية">
+            </div>
+            <button class="btn-block" style="background-color: var(--success-color);" onclick="studentRegister()">إرسال طلب التسجيل للمشرف</button>
+        </div>
+    </div>
+
+    <div id="student-dashboard" class="page">
+        <button class="logout-btn" onclick="logoutAll()">تسجيل الخروج ↩</button>
+        <h2>لوحة الطالب الأكاديمية ونظام رفع التكاليف</h2>
+        <p style="margin-bottom: 20px; text-align: center; color: var(--text-muted);">مرحباً بالطالب: <span id="current-logged-student-name" style="font-weight: bold; color: var(--primary-blue);"></span></p>
+        <div class="clear"></div>
+
+        <div class="file-box">
+            <div class="form-group">
+                <label>اختر عضو هيئة التدريس (الدكتور المستهدف):</label>
+                <select id="student-target-doctor" onchange="updateStudentViewAssignment()"></select>
+            </div>
+
+            <div class="current-assignment-badge">
+                🎯 التكليف المطلوب عند هذا الدكتور حالياً: <span id="student-assignment-notice">الرجاء اختيار دكتور لرؤية التكليف</span>
+            </div>
+
+            <div class="form-group">
+                <label>ارفع الملف أو الصورة المقررة للتكليف (الحد الأقصى لحجم الملف 10MB):</label>
+                <input type="file" id="student-real-file" accept="image/*, .pdf, .doc, .docx, .xls, .xlsx, .zip, .rar" onchange="validateAndProcessFile(this)">
+            </div>
+
+            <div class="form-group">
+                <label>أضف ملاحظة أو رسالة موجهة للدكتور:</label>
+                <textarea id="student-note" placeholder="اكتب هنا أي تفاصيل تود إطلاع الدكتور عليها بخصوص هذا الملف..."></textarea>
+            </div>
+
+            <button class="btn-block" onclick="submitAssignmentFromStudent()">📤 إرسال التكليف والملف للدكتور فوراً</button>
+        </div>
+
+        <h3>قائمة التقييم والردود والمستندات المرسلة</h3>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>الدكتور</th>
+                        <th>التكليف</th>
+                        <th>الملف المرفوع</th>
+                        <th>الحجم</th>
+                        <th>الدرجة والتقييم</th>
+                        <th>الإجراء</th>
+                        <th>حالة الطلب</th>
+                    </tr>
+                </thead>
+                <tbody id="student-evaluation-list">
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div id="feedback-modal" class="custom-modal">
+        <div class="modal-content">
+            <h3 style="margin-top:0;">📑 تفاصيل تقييم ورد الدكتور الأكاديمي</h3>
+            <p style="margin: 12px 0;"><strong>اسم الدكتور:</strong> <span id="modal-doc-name"></span></p>
+            <p style="margin: 12px 0;"><strong>التكليف المقيّم:</strong> <span id="modal-assign-name"></span></p>
+            <hr style="border:0; border-top:1px solid #e2e8f0; margin:15px 0;">
+            <p style="margin: 12px 0; font-size:16px;"><strong>⭐ الدرجة / التقييم:</strong> <span id="modal-grade" style="color:var(--success-color); font-weight:bold;"></span></p>
+            <div style="background:#f8fafc; padding:15px; border-radius:12px; border-right:4px solid var(--primary-blue); margin-top:12px;">
+                <strong>💬 ملاحظة الدكتور:</strong>
+                <p id="modal-feedback-text" style="margin-top:5px; color:var(--text-main); line-height:1.5;"></p>
+            </div>
+            <button class="close-modal-btn" onclick="closeFeedbackModal()">إغلاق النافذة</button>
+            <div class="clear"></div>
+        </div>
+    </div>
+
+    <div id="doctor-login-page" class="page">
+        <h2>تسجيل دخول أعضاء هيئة التدريس والإدارة</h2>
+        <div class="form-group">
+            <label>اسم المستخدم المخصص:</label>
+            <input type="text" id="doc-user" placeholder="أدخل اسم المستخدم">
+        </div>
+        <div class="form-group">
+            <label>كلمة المرور السرية:</label>
+            <input type="password" id="doc-pass" placeholder="أدخل كلمة المرور">
+        </div>
+        <button class="btn-block" onclick="handleUnifiedLogin()">تسجيل الدخول الآمن</button>
+    </div>
+
+    <div id="doctor-dashboard" class="page">
+        <button class="logout-btn" onclick="logoutAll()">تسجيل الخروج ↩</button>
+        <h2>لوحة المراجعة والتحقق الخاصة بـ: <span id="current-doctor-display-name" style="color: var(--primary-blue);"></span></h2>
+        <p style="font-size: 14px; color: var(--text-muted); margin-bottom: 25px; text-align: center;">يمكنك هنا معاينة وتحميل الملفات المرفوعة الموجهة إليك بصيغتها المستدامة الفعالة.</p>
+        <div class="clear"></div>
+        
+        <h3>التكاليف والملفات الواردة من الطلاب بانتظار تقييمك</h3>
+        <div id="doctor-incoming-assignments-container">
+        </div>
+    </div>
+
+    <div id="admin-dashboard" class="page">
+        <button class="logout-btn" onclick="logoutAll()">تسجيل الخروج الإداري ↩</button>
+        <h2>لوحة التحكم الإدارية الشاملة (المشرف العام)</h2>
+        <p style="font-size: 14px; color:var(--text-muted); margin-bottom: 25px; text-align: center;">مرحباً بك يا عامر. البيانات تُحفظ محلياً في المتصفح تلقائياً فور أي تعديل.</p>
+        <div class="clear"></div>
+
+        <h3>إضافة دكتور جديد وتحديد التكليف المخصص له</h3>
+        <div class="file-box" style="background: #fff; border-color: var(--primary-blue);">
+            <div class="form-row">
+                <div class="form-group">
+                    <label>اسم الدكتور الكامل:</label>
+                    <input type="text" id="new-doc-name" placeholder="مثال: د. محمد الرشيدي">
+                </div>
+                <div class="form-group">
+                    <label>اسم مستخدم الدكتور:</label>
+                    <input type="text" id="new-doc-user" placeholder="أدخل اسم الدخول">
+                </div>
+                <div class="form-group">
+                    <label>كلمة السر:</label>
+                    <input type="text" id="new-doc-pass" placeholder="أدخل كلمة المرور">
+                </div>
+            </div>
+            <div class="form-group">
+                <label>اسم التكليف المخصص لهذا الدكتور تحديداً:</label>
+                <input type="text" id="new-doc-assignment" placeholder="مثال: بحث دور الذكاء الاصطناعي في إدارة المخزون">
+            </div>
+            <button class="btn-block" onclick="addNewDoctor()">➕ إضافة وتأكيد حساب الدكتور وتكليفه</button>
+        </div>
+
+        <h3>قائمة الدكاترة الحاليين وتعديل التكاليف الفردية</h3>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>اسم الدكتور</th>
+                        <th>اسم المستخدم</th>
+                        <th>كلمة المرور</th>
+                        <th>التكليف المخصص له</th>
+                        <th>التحكم</th>
+                    </tr>
+                </thead>
+                <tbody id="admin-doctors-list">
+                </tbody>
+            </table>
+        </div>
+
+        <h3>طلبات تسجيل الطلاب الجديدة (قيد الانتظار للقبول)</h3>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>الاسم الكامل</th>
+                        <th>اسم المستخدم</th>
+                        <th>كلمة المرور</th>
+                        <th>الإجراء الإداري</th>
+                    </tr>
+                </thead>
+                <tbody id="admin-pending-students">
+                </tbody>
+            </table>
+        </div>
+
+        <h3>قائمة الطلاب المسجلين والمصرح لهم بدخول المنصة حالياً</h3>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>الاسم الكامل</th>
+                        <th>اسم المستخدم</th>
+                        <th>الحالة برمجياً</th>
+                        <th>العمليات</th>
+                    </tr>
+                </thead>
+                <tbody id="admin-active-students">
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="footer-signature">
+        Platform: <span>Business Activities</span> | Powered by: Amer Al-Shuaibi | <span>776881748</span>
+    </div>
+
+    <script>
+        // ميكانيكية التحقق من وجود بيانات سابقة في المتصفح أو تحميل الافتراضية لأول مرة
+        let dynamicDoctors = JSON.parse(localStorage.getItem('ba_doctors')) || [
+            { name: "د. محمد الرشيدي", user: "doctor", pass: "doctor123", assignment: "بحث الذكاء الاصطناعي في إدارة المخزون" }
+        ];
+        
+        let activeStudents = JSON.parse(localStorage.getItem('ba_active_students')) || [
+            { name: "خالد عبد الله", user: "khaled_std", pass: "12345" }
+        ];
+
+        let pendingStudents = JSON.parse(localStorage.getItem('ba_pending_students')) || [
+            { name: "سالم عمر البريكي", user: "salem_2026", pass: "pass123" }
+        ];
+
+        let globalSubmittedAssignments = JSON.parse(localStorage.getItem('ba_submissions')) || [];
+        
+        let currentSessionUser = null;
+        let tempFileBase64 = ""; 
+        let tempFileType = "";
+        let tempFileSizeText = "";
+
+        window.onload = function() {
+            saveAllToLocalStorage(); // الحفظ المبدئي
+            renderAdminDoctorsTable();
+            renderAdminActiveStudentsTable();
+            renderAdminPendingStudentsTable();
+            populateStudentDoctorsDropdown();
+        };
+
+        // دالة مركزية لحفظ البيانات الحالية في المتصفح فور حدوث أي حدث
+        function saveAllToLocalStorage() {
+            localStorage.setItem('ba_doctors', JSON.stringify(dynamicDoctors));
+            localStorage.setItem('ba_active_students', JSON.stringify(activeStudents));
+            localStorage.setItem('ba_pending_students', JSON.stringify(pendingStudents));
+            localStorage.setItem('ba_submissions', JSON.stringify(globalSubmittedAssignments));
+        }
+
+        function switchPage(pageId, btnId) {
+            document.querySelectorAll('.page').forEach(page => { page.classList.remove('active-page'); });
+            document.getElementById(pageId).classList.add('active-page');
+
+            if(btnId) {
+                document.querySelectorAll('.demo-nav button').forEach(btn => { btn.classList.remove('active-nav-btn'); });
+                document.getElementById(btnId).classList.add('active-nav-btn');
+            }
+        }
+
+        function switchStudentTab(tab) {
+            document.getElementById('tab-login').classList.remove('active-tab');
+            document.getElementById('tab-register').classList.remove('active-tab');
+            if(tab === 'login') {
+                document.getElementById('tab-login').classList.add('active-tab');
+                document.getElementById('student-login-form').style.display = 'block';
+                document.getElementById('student-register-form').style.display = 'none';
+            } else {
+                document.getElementById('tab-register').classList.add('active-tab');
+                document.getElementById('student-login-form').style.display = 'none';
+                document.getElementById('student-register-form').style.display = 'block';
+            }
+        }
+
+        function validateAndProcessFile(input) {
+            const file = input.files[0];
+            if (!file) return;
+
+            const maxSizeInBytes = 10 * 1024 * 1024; 
+            if (file.size > maxSizeInBytes) {
+                alert(`⚠️ حجم الملف كبير جداً (${(file.size / (1024 * 1024)).toFixed(2)} MB)! الحد الأقصى المسموح به هو 10 ميجابايت.`);
+                input.value = ""; 
+                return;
+            }
+
+            tempFileType = file.type || "application/octet-stream";
+            tempFileSizeText = (file.size / (1024 * 1024)).toFixed(2) + " MB";
+
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                tempFileBase64 = e.target.result; 
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function renderAdminDoctorsTable() {
+            const tbody = document.getElementById('admin-doctors-list');
+            tbody.innerHTML = "";
+            dynamicDoctors.forEach((doc, index) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${doc.name}</td>
+                    <td>${doc.user}</td>
+                    <td>${doc.pass}</td>
+                    <td style="color: var(--primary-blue); font-weight: bold;">${doc.assignment}</td>
+                    <td>
+                        <button class="btn-action btn-edit" onclick="editDoctorAssignmentInline(${index})">تعديل التكليف</button>
+                        <button class="btn-action btn-reject" onclick="deleteDoctorInline(${index})">حذف</button>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+            populateStudentDoctorsDropdown();
+        }
+
+        function renderAdminActiveStudentsTable() {
+            const tbody = document.getElementById('admin-active-students');
+            tbody.innerHTML = "";
+            activeStudents.forEach((std, index) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${std.name}</td>
+                    <td>${std.user}</td>
+                    <td style="color: var(--success-color); font-weight: bold;">نشط ومصرح له بالدخول</td>
+                    <td>
+                        <button class="btn-action btn-reject" onclick="deleteStudentInline(${index})">حذف الحساب</button>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        function renderAdminPendingStudentsTable() {
+            const tbody = document.getElementById('admin-pending-students');
+            tbody.innerHTML = "";
+            if (pendingStudents.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="4" style="text-align:center; color: var(--text-muted);">لا توجد طلبات معلقة حالياً.</td></tr>`;
+                return;
+            }
+            pendingStudents.forEach((std, index) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${std.name}</td>
+                    <td>${std.user}</td>
+                    <td>${std.pass}</td>
+                    <td>
+                        <button class="btn-action btn-approve" onclick="processStudentRequestInline(${index}, 'approve')">قبول وتفعيل</button>
+                        <button class="btn-action btn-reject" onclick="processStudentRequestInline(${index}, 'reject')">رفض</button>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        function populateStudentDoctorsDropdown() {
+            const select = document.getElementById('student-target-doctor');
+            if(!select) return;
+            select.innerHTML = "";
+            dynamicDoctors.forEach(doc => {
+                const opt = document.createElement('option');
+                opt.value = doc.user;
+                opt.innerText = doc.name;
+                select.appendChild(opt);
+            });
+            updateStudentViewAssignment();
+        }
+
+        function updateStudentViewAssignment() {
+            const select = document.getElementById('student-target-doctor');
+            const notice = document.getElementById('student-assignment-notice');
+            if(!select || select.value === "") return;
+            
+            let foundDoc = dynamicDoctors.find(d => d.user === select.value);
+            if(foundDoc) {
+                notice.innerText = foundDoc.assignment;
+            }
+        }
+
+        function editDoctorAssignmentInline(index) {
+            const newAssignment = prompt(`تعديل وتحديد اسم التكليف الخاص بـ (${dynamicDoctors[index].name}):`, dynamicDoctors[index].assignment);
+            if(newAssignment && newAssignment.trim() !== "") {
+                dynamicDoctors[index].assignment = newAssignment.trim();
+                saveAllToLocalStorage();
+                renderAdminDoctorsTable();
+                alert("تم تحديث التكليف وحفظه بنجاح.");
+            }
+        }
+
+        function deleteDoctorInline(index) {
+            if(confirm("هل أنت متأكد من حذف حساب هذا الدكتور نهائياً؟")) {
+                dynamicDoctors.splice(index, 1);
+                saveAllToLocalStorage();
+                renderAdminDoctorsTable();
+            }
+        }
+
+        function deleteStudentInline(index) {
+            if(confirm("هل تريد إلغاء صلاحية هذا الطالب وحذف حسابه؟")) {
+                activeStudents.splice(index, 1);
+                saveAllToLocalStorage();
+                renderAdminActiveStudentsTable();
+            }
+        }
+
+        function processStudentRequestInline(index, action) {
+            let requestedStudent = pendingStudents[index];
+            pendingStudents.splice(index, 1);
+            
+            if(action === 'approve') {
+                activeStudents.push(requestedStudent);
+                alert(`تم تفعيل حساب الطالب "${requestedStudent.name}" بنجاح.`);
+            } else {
+                alert('تم رفض وحذف الطلب المعلق.');
+            }
+            saveAllToLocalStorage();
+            renderAdminActiveStudentsTable();
+            renderAdminPendingStudentsTable();
+        }
+
+        function addNewDoctor() {
+            const name = document.getElementById('new-doc-name').value.trim();
+            const user = document.getElementById('new-doc-user').value.trim();
+            const pass = document.getElementById('new-doc-pass').value.trim();
+            const assignment = document.getElementById('new-doc-assignment').value.trim();
+
+            if(!name || !user || !pass || !assignment) {
+                alert('تنبيه: يرجى كتابة كافة البيانات وتعيين التكليف!');
+                return;
+            }
+
+            dynamicDoctors.push({ name: name, user: user, pass: pass, assignment: assignment });
+            saveAllToLocalStorage();
+            renderAdminDoctorsTable();
+
+            alert(`تم إنشاء حساب الدكتور ${name} وتأكيده حياً.`);
+            document.getElementById('new-doc-name').value = '';
+            document.getElementById('new-doc-user').value = '';
+            document.getElementById('new-doc-pass').value = '';
+            document.getElementById('new-doc-assignment').value = '';
+        }
+
+        function studentRegister() {
+            const name = document.getElementById('reg-name').value.trim();
+            const user = document.getElementById('reg-user').value.trim();
+            const pass = document.getElementById('reg-pass').value.trim();
+
+            if(!name || !user || !pass) {
+                alert('يرجى كتابة كافة البيانات المطلوبة!');
+                return;
+            }
+
+            pendingStudents.push({ name: name, user: user, pass: pass });
+            saveAllToLocalStorage();
+            renderAdminPendingStudentsTable();
+
+            alert('تم إرسال طلب تسجيلك بنجاح، يرجى انتظار تفعيل المشرف لتمكين الدخول.');
+            switchStudentTab('login');
+            document.getElementById('reg-name').value = '';
+            document.getElementById('reg-user').value = '';
+            document.getElementById('reg-pass').value = '';
+        }
+
+        function handleStudentLogin() {
+            const user = document.getElementById('std-login-user').value.trim();
+            const pass = document.getElementById('std-login-pass').value.trim();
+
+            let found = activeStudents.find(s => s.user === user && s.pass === pass);
+            if(found) {
+                currentSessionUser = found; 
+                document.getElementById('main-nav').style.display = 'none';
+                document.getElementById('current-logged-student-name').innerText = found.name;
+                
+                renderStudentEvaluationTable();
+                switchPage('student-dashboard', null);
+                
+                document.getElementById('std-login-user').value = '';
+                document.getElementById('std-login-pass').value = '';
+            } else {
+                alert("بيانات الدخول غير صحيحة، أو لم يتم قبول الحساب حتى الآن.");
+            }
+        }
+
+        function submitAssignmentFromStudent() {
+            const targetDocUser = document.getElementById('student-target-doctor').value;
+            const fileInput = document.getElementById('student-real-file');
+            const note = document.getElementById('student-note').value.trim();
+
+            if(!targetDocUser || !fileInput.files.length || !tempFileBase64) {
+                alert('يرجى تحديد الدكتور الموجه له واختيار الملف لرفعه أولاً!');
+                return;
+            }
+
+            let foundDoc = dynamicDoctors.find(d => d.user === targetDocUser);
+            const originalFileName = fileInput.files[0].name;
+
+            let newSubmit = {
+                id: Date.now(),
+                studentName: currentSessionUser.name,
+                studentUser: currentSessionUser.user,
+                doctorUser: targetDocUser,
+                doctorName: foundDoc.name,
+                assignmentName: foundDoc.assignment,
+                fileName: originalFileName,
+                fileData: tempFileBase64, 
+                fileType: tempFileType,
+                fileSize: tempFileSizeText,
+                studentNote: note || "لا توجد ملاحظات من الطالب.",
+                grade: "انتظار التقييم",
+                doctorFeedback: "قيد الانتظار والمراجعة حالياً...",
+                status: "معلق"
+            };
+
+            globalSubmittedAssignments.push(newSubmit);
+            saveAllToLocalStorage();
+            renderStudentEvaluationTable();
+
+            alert(`تم إرسال الملف (${originalFileName}) بنجاح للمتصفح المزامَن.`);
+            fileInput.value = "";
+            document.getElementById('student-note').value = "";
+            tempFileBase64 = "";
+            tempFileType = "";
+            tempFileSizeText = "";
+        }
+
+        function renderStudentEvaluationTable() {
+            const tbody = document.getElementById('student-evaluation-list');
+            tbody.innerHTML = "";
+
+            let mySubmissions = globalSubmittedAssignments.filter(a => a.studentUser === currentSessionUser.user);
+
+            if(mySubmissions.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="7" style="text-align:center; color:var(--text-muted);">لم تقم برفع أو إرسال أي تكاليف حتى الآن.</td></tr>`;
+                return;
+            }
+
+            mySubmissions.forEach(item => {
+                const row = document.createElement('tr');
+                let statusStyle = item.status === 'معلق' ? 'color: var(--warning-color); font-weight:bold;' : 'color: var(--success-color); font-weight:bold;';
+                
+                let actionBtnHTML = "";
+                if(item.status === 'معلق') {
+                    actionBtnHTML = `<span style="color:var(--text-muted); font-style:italic;">قيد الانتظار</span>`;
+                } else {
+                    actionBtnHTML = `<button class="btn-action btn-approve" style="background:var(--primary-blue);" onclick="showFeedbackInModal(${item.id})">👁️ عرض الرد</button>`;
+                }
+
+                row.innerHTML = `
+                    <td>${item.doctorName}</td>
+                    <td>${item.assignmentName}</td>
+                    <td style="color: var(--primary-blue); font-weight: 500;">📄 ${item.fileName}</td>
+                    <td>${item.fileSize}</td>
+                    <td style="font-weight:700; color:var(--text-main);">${item.grade}</td>
+                    <td>${actionBtnHTML}</td>
+                    <td style="${statusStyle}">${item.status === 'معلق' ? '⏳ قيد الانتظار' : '✅ تم الرد'}</td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        function showFeedbackInModal(id) {
+            let item = globalSubmittedAssignments.find(a => a.id === id);
+            if(!item) return;
+
+            document.getElementById('modal-doc-name').innerText = item.doctorName;
+            document.getElementById('modal-assign-name').innerText = item.assignmentName;
+            document.getElementById('modal-grade').innerText = item.grade;
+            document.getElementById('modal-feedback-text').innerText = item.doctorFeedback;
+
+            document.getElementById('feedback-modal').style.display = 'flex';
+        }
+
+        function closeFeedbackModal() {
+            document.getElementById('feedback-modal').style.display = 'none';
+        }
+
+        function forceDownloadAsset(base64Data, contentType, fileName) {
+            try {
+                const sliceSize = 1024;
+                const byteCharacters = atob(base64Data.split(",")[1]);
+                const byteArrays = [];
+
+                for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+                    const slice = byteCharacters.slice(offset, offset + sliceSize);
+                    const byteNumbers = new Array(slice.length);
+                    for (let i = 0; i < slice.length; i++) {
+                        byteNumbers[i] = slice.charCodeAt(i);
+                    }
+                    const byteArray = new Uint8Array(byteNumbers);
+                    byteArrays.push(byteArray);
+                }
+
+                const blob = new Blob(byteArrays, { type: contentType });
+                const blobUrl = URL.createObjectURL(blob);
+
+                const tempAnchor = document.createElement("a");
+                tempAnchor.href = blobUrl;
+                tempAnchor.download = fileName;
+                document.body.appendChild(tempAnchor);
+                tempAnchor.click();
+                
+                setTimeout(() => {
+                    document.body.removeChild(tempAnchor);
+                    URL.revokeObjectURL(blobUrl);
+                }, 100);
+            } catch (error) {
+                alert("❌ حدث خطأ أثناء معالجة الملف للتحميل.");
+            }
+        }
+
+        function renderDoctorIncomingAssignments() {
+            const container = document.getElementById('doctor-incoming-assignments-container');
+            container.innerHTML = "";
+
+            let myIncoming = globalSubmittedAssignments.filter(a => a.doctorUser === currentSessionUser.user && a.status === 'معلق');
+
+            if(myIncoming.length === 0) {
+                container.innerHTML = `<p style="color: var(--text-muted); font-style: italic; text-align: center; padding: 20px;">لا توجد أي تكاليف جديدة مرفوعة موجهة إليك حالياً.</p>`;
+                return;
+            }
+
+            myIncoming.forEach(item => {
+                const box = document.createElement('div');
+                box.className = "file-box";
+                box.style.borderColor = "var(--primary-blue)";
+
+                let previewHTML = "";
+                if (item.fileType && item.fileType.startsWith("image/")) {
+                    previewHTML = `<img src="${item.fileData}" class="preview-img" alt="معاينة المستند المرفوع">`;
+                } else {
+                    previewHTML = `
+                        <span style="font-size:45px; margin-bottom:10px;">📄</span>
+                        <strong>نوع المستند: [ ${item.fileName.split('.').pop().toUpperCase()} ]</strong>
+                        <p style="font-size:13px; margin-top:5px; color:var(--text-muted);">اسم ملف الطالب: ${item.fileName} (${item.fileSize})</p>
+                    `;
+                }
+
+                box.innerHTML = `
+                    <div style="float: left;">
+                        <button class="btn-download" onclick="forceDownloadAsset('${item.fileData}', '${item.fileType}', '${item.fileName}')">📥 تحميل المستند</button>
+                    </div>
+                    <p><strong>الطالب المرسِل:</strong> <span style="color:var(--primary-blue); font-weight:700;">${item.studentName}</span></p>
+                    <p><strong>التكليف:</strong> ${item.assignmentName}</p>
+                    <p style="background:#f8fafc; padding:12px; border-radius:12px; margin:12px 0; border: 1px solid #e2e8f0;"><strong>رسالة الطالب:</strong> ${item.studentNote}</p>
+                    <div class="clear"></div>
+                    
+                    <div class="live-preview-box">
+                        <p style="font-weight:600; margin-bottom:10px; color:var(--text-main);">🖥️ المعاينة المباشرة للمستند (Live Preview):</p>
+                        <div class="pdf-frame-mock">
+                            ${previewHTML}
+                        </div>
+                    </div>
+
+                    <div class="form-row" style="margin-top:15px;">
+                        <div class="form-group" style="flex:1; min-width:150px;">
+                            <label>رصد الدرجة:</label>
+                            <input type="text" id="grade-input-${item.id}" placeholder="مثال: 95 أو ممتاز">
+                        </div>
+                        <div class="form-group" style="flex:2; min-width:250px;">
+                            <label>كتابة ملاحظة والرد:</label>
+                            <input type="text" id="feedback-input-${item.id}" placeholder="اكتب ملاحظاتك للطالب هنا...">
+                        </div>
+                    </div>
+                    <button class="btn-block" style="background:var(--success-color);" onclick="submitEvaluationFromDoctor(${item.id})">💾 إرسال التقييم لحساب الطالب مباشرة</button>
+                `;
+                container.appendChild(box);
+            });
+        }
+
+        function submitEvaluationFromDoctor(id) {
+            const gradeVal = document.getElementById(`grade-input-${id}`).value.trim();
+            const feedbackVal = document.getElementById(`feedback-input-${id}`).value.trim();
+
+            if(!gradeVal || !feedbackVal) {
+                alert('تنبيه: يرجى رصد الدرجة وكتابة الرد أولاً لإتمام العملية!');
+                return;
+            }
+
+            let foundIdx = globalSubmittedAssignments.findIndex(a => a.id === id);
+            if(foundIdx !== -1) {
+                globalSubmittedAssignments[foundIdx].grade = gradeVal;
+                globalSubmittedAssignments[foundIdx].doctorFeedback = feedbackVal;
+                globalSubmittedAssignments[foundIdx].status = "تم التقييم";
+
+                saveAllToLocalStorage(); // حفظ فوري ومستدام للتعديل والتقييم
+                alert('تم حفظ وإرسال التقييم حياً وجاهزاً في المتصفح.');
+                renderDoctorIncomingAssignments();
+            }
+        }
+
+        function handleUnifiedLogin() {
+            const user = document.getElementById('doc-user').value.trim();
+            const pass = document.getElementById('doc-pass').value.trim();
+
+            if (user === "admin123" && pass === "amer2002") {
+                currentSessionUser = { name: "عامر الشعيبي", role: "admin" };
+                document.getElementById('main-nav').style.display = 'none';
+                switchPage('admin-dashboard', null);
+                
+                document.getElementById('doc-user').value = '';
+                document.getElementById('doc-pass').value = '';
+                return;
+            }
+
+            let foundDoctor = dynamicDoctors.find(d => d.user === user && d.pass === pass);
+            if (foundDoctor) {
+                currentSessionUser = foundDoctor;
+                document.getElementById('main-nav').style.display = 'none';
+                document.getElementById('current-doctor-display-name').innerText = foundDoctor.name;
+                
+                renderDoctorIncomingAssignments();
+                switchPage('doctor-dashboard', null);
+                
+                document.getElementById('doc-user').value = '';
+                document.getElementById('doc-pass').value = '';
+            } else {
+                alert("اسم المستخدم أو كلمة المرور غير صحيحة.");
+            }
+        }
+
+        function logoutAll() {
+            currentSessionUser = null;
+            document.getElementById('feedback-modal').style.display = 'none';
+            document.getElementById('main-nav').style.display = 'flex';
+            switchPage('student-login-page', 'btn-student');
+            switchStudentTab('login');
+        }
+    </script>
+</body>
+</html>
+
